@@ -33,8 +33,8 @@ public class Main {
                     .build();
 
             while (objectStream.hasNext()) {
-                var res = objectStream.next();
-                stringBuilder.append(new String(res.bytes(), StandardCharsets.UTF_8));
+                String contentChunk = new String(objectStream.next().bytes(), StandardCharsets.UTF_8);
+                // do something that might go wrong
             }
         }
 

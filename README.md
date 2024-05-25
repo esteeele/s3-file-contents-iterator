@@ -7,4 +7,25 @@ experience so I wrote this which 'safely' gets bytes in manageable chunks withou
 connection opening and degrading the whole S3 client. 
 
 I don't really think there's enough value in it as you can just parse an input stream and take care to close
-the connection, but may as well make it available. 
+the connection, but may as well make it available.
+
+Example usage 
+```java
+public class Example {
+    
+    public void example() {
+        ObjectStream objectStream = ObjectStream.builder()
+                .withBucket(BUCKET)
+                .withObjectKey(KEY)
+                .withChunkSize(250)
+                .withS3Client(s3Client)
+                .build();
+
+        while (objectStream.hasNext()) {
+            String contentChunk = new String(objectStream.next().bytes(), StandardCharsets.UTF_8);
+            // do something that might go wrong
+        }
+    }
+    
+}
+```
